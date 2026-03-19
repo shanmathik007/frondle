@@ -2,7 +2,7 @@
   "tasks": [
     {
       "type": "call",
-      "description": "Ã°ÂÂÂ Make a call",
+      "description": "ÃÂ°ÃÂÃÂÃÂ Make a call",
       "proposerId": "mmxpz4umwwm2gohh1",
       "proposerName": "shan",
       "receiverId": "friend_BPYXE3",
@@ -15,7 +15,7 @@
     },
     {
       "type": "call",
-      "description": "ð Make a call",
+      "description": "Ã°ÂÂÂ Make a call",
       "proposerId": "mmxpz4umwwm2gohh1",
       "proposerName": "shan",
       "receiverId": "friend_BPYXE3",
@@ -28,7 +28,7 @@
     },
     {
       "type": "call",
-      "description": "📞 Make a call",
+      "description": "ð Make a call",
       "proposerId": "mmxpz4umwwm2gohh1",
       "proposerName": "shan",
       "receiverId": "friend_BPYXE3",
@@ -38,7 +38,20 @@
       "status": "pending",
       "id": "mmxq9cil12l5ifi4m",
       "createdAt": 1773940311453
+    },
+    {
+      "type": "call",
+      "description": "📞 Make a call",
+      "proposerId": "mmxpz4umwwm2gohh1",
+      "proposerName": "shan",
+      "receiverId": "friend_BPYXE3",
+      "receiverName": "Friend (BPYXE3)",
+      "friendName": "Friend (BPYXE3)",
+      "gistId": "7f64f7c88c71022307986038d1679a4d",
+      "status": "pending",
+      "id": "mmxqa12zuzj64is6z",
+      "createdAt": 1773940343291
     }
   ],
-  "lastUpdated": 1773940311453
+  "lastUpdated": 1773940343291
 }
