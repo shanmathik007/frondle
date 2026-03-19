@@ -1,0 +1,16 @@
+{
+  "friends": [
+    {
+      "id": "friend_BPYXE3",
+      "inviteCode": "BPYXE3",
+      "displayName": "Friend (BPYXE3)",
+      "avatar": "🦁",
+      "isPending": true,
+      "addedAt": 1773940228905,
+      "heat": 50,
+      "tasksCompleted": 0,
+      "currentStreak": 0
+    }
+  ],
+  "lastUpdated": 1773940228905
+}
