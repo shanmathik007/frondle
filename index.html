@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRöNDLé - Task Together</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body>
+  <div class="app">
+    <!-- Landing Screen (shown when not logged in) -->
+    <main id="landing" class="screen active">
+      <div class="hero">
+        <h1 class="logo">FRöNDLé</h1>
+        <p class="tagline">Turn tasks into games with friends</p>
+        
+        <div class="features">
+          <div class="feature">
+            <span class="emoji">🎯</span>
+            <span>Challenge friends</span>
+          </div>
+          <div class="feature">
+            <span class="emoji">🔥</span>
+            <span>Build streaks</span>
+          </div>
+          <div class="feature">
+            <span class="emoji">🏆</span>
+            <span>Earn points</span>
+          </div>
+        </div>
+
+        <div class="card setup-card">
+          <h2>Get Started</h2>
+          
+          <!-- Step 1: Connect GitHub -->
+          <div id="github-connect-section">
+            <p class="hint" style="margin-bottom: 15px;">Connect GitHub to sync your data</p>
+            <input type="password" id="github-token-input" placeholder="GitHub Personal Access Token">
+            <a href="https://github.com/settings/tokens/new?scopes=repo,gist&description=FRöNDLé" 
+               target="_blank" class="hint" style="display: block; margin: 8px 0; color: var(--primary);">
+              → Create token (repo + gist scopes)
+            </a>
+            <button id="connect-github-btn" class="btn primary">Connect GitHub</button>
+            <button id="skip-github-btn" class="btn secondary" style="margin-top: 10px;">Skip (local only)</button>
+          </div>
+          
+          <!-- Step 2: Create Profile (shown after GitHub connect) -->
+          <div id="profile-create-section" style="display: none;">
+            <p class="hint" style="margin-bottom: 10px;" id="github-status">✓ Connected as @username</p>
+            <input type="text" id="username-input" placeholder="Choose a username" maxlength="20">
+            <input type="text" id="display-name-input" placeholder="Display name">
+            <button id="start-btn" class="btn primary">Start Playing</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Main Dashboard (shown when logged in) -->
+    <main id="dashboard" class="screen">
+      <header class="top-bar">
+        <div class="user-info">
+          <span class="greeting">Hey, <strong id="user-display-name">friend</strong>!</span>
+        </div>
+        <div class="stats-mini">
+          <span class="stat">🔥 <span id="streak-count">0</span></span>
+          <span class="stat">⭐ <span id="points-count">0</span></span>
+        </div>
+      </header>
+
+      <!-- Tab Navigation -->
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="friends">👥 Friends</button>
+        <button class="tab-btn" data-tab="tasks">📋 Tasks</button>
+        <button class="tab-btn" data-tab="profile">👤 Me</button>
+      </nav>
+
+      <!-- Friends Tab -->
+      <section id="friends-tab" class="tab-content active">
+        <div class="section-header">
+          <h2>Your Friends</h2>
+          <button id="add-friend-btn" class="btn small">+ Add</button>
+        </div>
+        
+        <div id="friends-list" class="friends-list">
+          <div class="empty-state">
+            <span class="emoji">👋</span>
+            <p>No friends yet! Share your invite code to connect.</p>
+          </div>
+        </div>
+
+        <div class="invite-box">
+          <p>Your invite code:</p>
+          <div class="code-display">
+            <code id="my-invite-code">---</code>
+            <button id="copy-code-btn" class="btn small">📋 Copy</button>
+          </div>
+          <p class="hint">Friends visit: <code id="my-invite-link">your-link</code></p>
+        </div>
+      </section>
+
+      <!-- Tasks Tab -->
+      <section id="tasks-tab" class="tab-content">
+        <div class="section-header">
+          <h2>Active Tasks</h2>
+        </div>
+
+        <div id="pending-tasks" class="task-list">
+          <div class="empty-state">
+            <span class="emoji">✨</span>
+            <p>No active tasks. Propose one to a friend!</p>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <h2>Completed</h2>
+        </div>
+        <div id="completed-tasks" class="task-list completed">
+          <!-- Completed tasks render here -->
+        </div>
+      </section>
+
+      <!-- Profile Tab -->
+      <section id="profile-tab" class="tab-content">
+        <div class="profile-card">
+          <div class="avatar" id="profile-avatar">😊</div>
+          <h2 id="profile-name">Username</h2>
+          <p class="username">@<span id="profile-username">user</span></p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-value" id="stat-points">0</span>
+            <span class="stat-label">Total Points</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-streak">0</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-tasks">0</span>
+            <span class="stat-label">Tasks Done</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-friends">0</span>
+            <span class="stat-label">Friends</span>
+          </div>
+        </div>
+
+        <!-- GitHub Sync Status -->
+        <div class="card" id="github-status-card" style="margin-bottom: 15px; padding: 15px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span id="sync-status-icon">🔗</span>
+              <span id="sync-status-text">GitHub: Not connected</span>
+            </div>
+            <button id="sync-now-btn" class="btn small" style="display: none;">↻ Sync</button>
+          </div>
+          <div id="github-connect-inline" style="margin-top: 10px;">
+            <input type="password" id="inline-token-input" placeholder="Paste GitHub token" style="margin-bottom: 8px;">
+            <button id="inline-connect-btn" class="btn small primary">Connect</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <!-- Only shown when NOT connected to GitHub -->
+          <button id="export-data-btn" class="btn secondary">📥 Export Data (Backup)</button>
+          <button id="reset-btn" class="btn danger">🗑️ Reset All</button>
+        </div>
+        
+        <p id="backup-hint" class="hint" style="text-align: center; margin-top: 10px; display: none;">
+          ✓ Data auto-saved to your GitHub repo
+        </p>
+      </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay">
+      <!-- Add Friend Modal -->
+      <div id="add-friend-modal" class="modal">
+        <div class="modal-header">
+          <h3>Add Friend</h3>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="friend-code-input" placeholder="Enter friend's invite code">
+          <button id="connect-friend-btn" class="btn primary">Connect</button>
+        </div>
+      </div>
+
+      <!-- Propose Task Modal -->
+      <div id="propose-task-modal" class="modal">
+        <div class="modal-header">
+          <h3>Propose Task</h3>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Challenge <strong id="propose-to-name">Friend</strong></p>
+          
+          <div class="task-options">
+            <button class="task-option" data-task="workout">💪 Workout together</button>
+            <button class="task-option" data-task="read">📚 Read a chapter</button>
+            <button class="task-option" data-task="walk">🚶 Take a walk</button>
+            <button class="task-option" data-task="cook">🍳 Cook something</button>
+            <button class="task-option" data-task="call">📞 Make a call</button>
+            <button class="task-option" data-task="learn">🧠 Learn something new</button>
+          </div>
+          
+          <div class="custom-task">
+            <input type="text" id="custom-task-input" placeholder="Or type custom task...">
+          </div>
+          
+          <button id="spin-wheel-btn" class="btn secondary">🎲 Random Challenge</button>
+          <button id="send-proposal-btn" class="btn primary">Send Challenge</button>
+        </div>
+      </div>
+
+      <!-- Task Response Modal -->
+      <div id="task-response-modal" class="modal">
+        <div class="modal-header">
+          <h3>Task Challenge!</h3>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p><strong id="challenger-name">Friend</strong> challenges you:</p>
+          <div class="task-display">
+            <span id="task-emoji">🎯</span>
+            <span id="task-description">Do something fun</span>
+          </div>
+          <div class="response-btns">
+            <button id="accept-task-btn" class="btn primary">✓ Accept</button>
+            <button id="decline-task-btn" class="btn secondary">✗ Decline</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mark Complete Modal -->
+      <div id="complete-modal" class="modal">
+        <div class="modal-header">
+          <h3>Mark Complete</h3>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Did you complete this task?</p>
+          <div class="task-display">
+            <span id="complete-task-emoji">🎯</span>
+            <span id="complete-task-desc">Task description</span>
+          </div>
+          <p class="hint">Your friend must also confirm for points!</p>
+          <button id="confirm-complete-btn" class="btn primary">✓ I Did It!</button>
+        </div>
+      </div>
+
+      <!-- Success Modal -->
+      <div id="success-modal" class="modal celebration">
+        <div class="modal-body">
+          <div class="confetti">🎉</div>
+          <h2>Task Complete!</h2>
+          <p>You both did it!</p>
+          <div class="points-earned">+<span id="earned-points">100</span> points each</div>
+          <button class="btn primary close-btn">Awesome!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+  </div>
+
+  <script src="scripts/storage.js"></script>
+  <script src="scripts/ui.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>
