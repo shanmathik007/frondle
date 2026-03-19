@@ -1,0 +1,18 @@
+{
+  "tasks": [
+    {
+      "type": "call",
+      "description": "📞 Make a call",
+      "proposerId": "mmxpz4umwwm2gohh1",
+      "proposerName": "shan",
+      "receiverId": "friend_BPYXE3",
+      "receiverName": "Friend (BPYXE3)",
+      "friendName": "Friend (BPYXE3)",
+      "gistId": "7f64f7c88c71022307986038d1679a4d",
+      "status": "pending",
+      "id": "mmxq8brjzijcd69iy",
+      "createdAt": 1773940263823
+    }
+  ],
+  "lastUpdated": 1773940263823
+}
